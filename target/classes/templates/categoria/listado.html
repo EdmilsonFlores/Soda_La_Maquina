@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Categorías</title>
+    </head>
+
+    <ul>
+
+        <li th:each="c : ${categorias}">
+
+            <span th:text="${c.nombreCategoria}">
+                Categoria
+            </span>
+
+        </li>
+
+    </ul>
+
+</html>

@@ -1,1 +1,5 @@
+com\sodalamaquina\repository\CategoriaInsumoRepository.class
+com\sodalamaquina\controller\CategoriaInsumoController.class
+com\sodalamaquina\service\CategoriaInsumoService.class
+com\sodalamaquina\domain\CategoriaInsumo.class
 com\sodalamaquina\SodaLaMaquinaApplication.class
