@@ -1,1 +1,11 @@
+com\sodalamaquina\ventas\model\DetalleVenta.class
+com\sodalamaquina\ventas\repository\VentaRepository.class
+com\sodalamaquina\ventas\model\Producto.class
+com\sodalamaquina\ventas\repository\RecetaRepository.class
+com\sodalamaquina\ventas\repository\DetalleVentaRepository.class
+com\sodalamaquina\ventas\repository\DetalleRecetaRepository.class
+com\sodalamaquina\ventas\model\Venta.class
+com\sodalamaquina\ventas\model\DetalleReceta.class
 com\sodalamaquina\SodaLaMaquinaApplication.class
+com\sodalamaquina\ventas\model\Receta.class
+com\sodalamaquina\ventas\repository\ProductoRepository.class
