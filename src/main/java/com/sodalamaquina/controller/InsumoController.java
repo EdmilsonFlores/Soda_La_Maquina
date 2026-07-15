@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/insumo")
@@ -32,4 +33,12 @@ public class InsumoController {
 
         return "/insumo/listado";
     }
+    
+    @PostMapping("/guardar")
+    public String guardar(Insumo insumo) {
+
+        insumoService.save(insumo);
+
+    return "redirect:/insumo/listado";
+}
 }

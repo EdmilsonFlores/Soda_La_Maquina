@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-    <head>
-        <title>Insumos</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>Insumos</title>
+</head>
 
-    <body>
+<body>
 
     <h1>Inventario de Insumos</h1>
 
-        <ul>
+    <form th:action="@{/insumo/guardar}" th:object="${insumo}" method="post">
 
-            <li th:each="i : ${insumos}">
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}">
 
-                <span th:text="${i.nombre}">
-                    Insumo
-                </span>
+        <br><br>
 
-            </li>
+        <button type="submit">
+            Guardar
+        </button>
 
-        </ul>
+    </form>
 
-    </body>
+    <hr>
 
+    <ul>
+
+        <li th:each="i : ${insumos}">
+
+            <span th:text="${i.nombre}">
+                Insumo
+            </span>
+
+        </li>
+
+    </ul>
+
+</body>
 </html>
