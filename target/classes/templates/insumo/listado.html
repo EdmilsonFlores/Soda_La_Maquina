@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Insumos</title>
+    </head>
+
+    <body>
+
+    <h1>Inventario de Insumos</h1>
+
+        <ul>
+
+            <li th:each="i : ${insumos}">
+
+                <span th:text="${i.nombre}">
+                    Insumo
+                </span>
+
+            </li>
+
+        </ul>
+
+    </body>
+
+</html>
