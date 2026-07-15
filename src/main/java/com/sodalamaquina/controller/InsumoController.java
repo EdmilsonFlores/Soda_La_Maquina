@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/insumo")
@@ -40,5 +41,16 @@ public class InsumoController {
         insumoService.save(insumo);
 
     return "redirect:/insumo/listado";
+    }
+    
+    @GetMapping("/eliminar/{idInsumo}")
+    public String eliminar(@PathVariable Integer idInsumo) {
+
+    insumoService.delete(idInsumo);
+
+    return "redirect:/insumo/listado";
 }
+    
+    
+    
 }

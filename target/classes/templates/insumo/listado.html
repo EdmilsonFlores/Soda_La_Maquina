@@ -6,36 +6,60 @@
     <title>Insumos</title>
 </head>
 
-<body>
+    <body>
 
-    <h1>Inventario de Insumos</h1>
+        <h1>Inventario de Insumos</h1>
 
-    <form th:action="@{/insumo/guardar}" th:object="${insumo}" method="post">
+        <form th:action="@{/insumo/guardar}" th:object="${insumo}" method="post">
 
-        <label>Nombre:</label>
-        <input type="text" th:field="*{nombre}">
+            <label>Nombre:</label>
+            <input type="text" th:field="*{nombre}">
 
-        <br><br>
+            <br><br>
 
-        <button type="submit">
-            Guardar
-        </button>
+            <button type="submit">
+                Guardar
+            </button>
 
-    </form>
+        </form>
 
-    <hr>
+        <hr>
 
-    <ul>
+        <table border="1">
 
-        <li th:each="i : ${insumos}">
+            <thead>
 
-            <span th:text="${i.nombre}">
-                Insumo
-            </span>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Eliminar</th>
+                </tr>
 
-        </li>
+            </thead>
 
-    </ul>
+            <tbody>
 
-</body>
+                <tr th:each="i : ${insumos}">
+
+                    <td th:text="${i.idInsumo}">
+                        0
+                    </td>
+
+                    <td th:text="${i.nombre}">
+                        Insumo
+                    </td>
+                    
+                    <td>
+                        <a th:href="@{/insumo/eliminar/{id}(id=${i.idInsumo})}">
+                            Eliminar
+                        </a>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </body>
 </html>
