@@ -22,46 +22,50 @@ public class CategoriaInsumoController {
     @GetMapping("/listado")
     public String listado(Model model) {
 
-    model.addAttribute(
-            "categorias",
-            categoriaService.getCategorias(false)
-    );
+        model.addAttribute(
+                "categorias",
+                categoriaService.getCategorias(false)
+        );
 
-    model.addAttribute(
-            "categoria",
-            new CategoriaInsumo()
-    );
+        model.addAttribute(
+                "categoria",
+                new CategoriaInsumo()
+        );
 
-    return "/categoria/listado";
+        return "/categoria/listado";
     }
-    
+
     @PostMapping("/guardar")
     public String guardar(CategoriaInsumo categoria) {
 
-    categoriaService.save(categoria);
+        categoriaService.save(categoria);
 
-    return "redirect:/categoria/listado";
+        return "redirect:/categoria/listado";
     }
-    
+
     @GetMapping("/modificar/{idCategoria}")
-    public String modificar(@PathVariable Integer idCategoria, Model model) {
+    public String modificar(@PathVariable Integer idCategoria,
+            Model model) {
 
-    CategoriaInsumo categoria = categoriaService.getCategoria(idCategoria);
+        CategoriaInsumo categoria =
+                categoriaService.getCategoria(idCategoria);
 
-    model.addAttribute("categoria", categoria);
+        model.addAttribute("categoria", categoria);
 
-    return "/categoria/modifica";
+        model.addAttribute(
+                "categorias",
+                categoriaService.getCategorias(false)
+        );
+
+        return "/categoria/listado";
     }
-    
+
     @GetMapping("/eliminar/{idCategoria}")
     public String eliminar(@PathVariable Integer idCategoria) {
 
-    categoriaService.delete(idCategoria);
+        categoriaService.delete(idCategoria);
 
-    return "redirect:/categoria/listado";
+        return "redirect:/categoria/listado";
     }
-    
-
-    
-    
 }
+    
