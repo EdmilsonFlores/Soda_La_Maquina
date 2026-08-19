@@ -1,0 +1,562 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gestión de Productos - La Máquina</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+          rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background-color: #111111;
+            color: #ffffff;
+        }
+
+        .sidebar .nav-link {
+            color: #b0b0b0;
+            padding: 0.75rem 1.25rem;
+            font-weight: 500;
+            border-radius: 0.375rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .sidebar .nav-link:hover {
+            color: #ffffff;
+            background-color: #222222;
+        }
+
+        .sidebar .nav-link.active {
+            color: #ffffff;
+            background-color: #2a2a2a;
+        }
+
+        .brand-title {
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .brand-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            color: #888888;
+        }
+
+        .btn-action {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="d-flex">
+
+    <!-- =========================
+         SIDEBAR
+         ========================= -->
+    <aside class="sidebar p-3 d-flex flex-column justify-content-between flex-shrink-0">
+
+        <div>
+
+            <!-- Branding -->
+            <div class="mb-4 px-2 pt-2">
+
+                <h3 class="brand-title mb-0 text-white">
+                    LA MÁQUINA
+                </h3>
+
+                <span class="brand-subtitle text-uppercase">
+                    Panel de Gestión Interna
+                </span>
+
+            </div>
+
+
+            <!-- Menú -->
+            <ul class="nav nav-pills flex-column mb-auto">
+
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a th:href="@{/}" class="nav-link">
+                        <i class="bi bi-grid-1x2-fill me-2"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+
+                <!-- Insumos -->
+                <li>
+                    <a th:href="@{/insumo/listado}" class="nav-link">
+                        <i class="bi bi-box-seam me-2"></i>
+                        Gestión de Insumos
+                    </a>
+                </li>
+
+
+                <!-- Proveedores -->
+                <li>
+                    <a th:href="@{/proveedor/listado}" class="nav-link">
+                        <i class="bi bi-truck me-2"></i>
+                        Proveedores
+                    </a>
+                </li>
+
+
+                <!-- Productos -->
+                <li>
+                    <a th:href="@{/producto/listado}" class="nav-link active">
+                        <i class="bi bi-egg-fried me-2"></i>
+                        Productos
+                    </a>
+                </li>
+
+
+                <!-- Recetas -->
+                <li>
+                    <a th:href="@{/receta/listado}" class="nav-link">
+                        <i class="bi bi-journal-text me-2"></i>
+                        Recetas
+                    </a>
+                </li>
+
+
+                <!-- Punto de Venta -->
+                <li>
+                    <a th:href="@{/venta/pos}" class="nav-link">
+                        <i class="bi bi-cash-coin me-2"></i>
+                        Punto de Venta
+                    </a>
+                </li>
+
+
+                <!-- Reportes -->
+                <li>
+                    <a th:href="@{/reporte/ventas}" class="nav-link">
+                        <i class="bi bi-bar-chart-line me-2"></i>
+                        Reportes
+                    </a>
+                </li>
+
+
+                <!-- Usuarios -->
+                <li>
+                    <a th:href="@{/usuario/listado}" class="nav-link">
+                        <i class="bi bi-people me-2"></i>
+                        Usuarios
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- Cerrar sesión -->
+        <div class="pt-3 border-top border-secondary">
+
+            <a th:href="@{/logout}" class="nav-link text-danger">
+
+                <i class="bi bi-box-arrow-left me-2"></i>
+                Cerrar Sesión
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+         ========================= -->
+    <main class="flex-grow-1 p-4 overflow-auto"
+          style="height: 100vh;">
+
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-0">
+                    Gestión de Productos
+                </h2>
+
+                <p class="text-muted small mb-0">
+                    Platos y bebidas que se venden en caja
+                </p>
+
+            </div>
+
+
+            <!-- Nuevo producto -->
+            <button type="button"
+                    class="btn btn-primary px-3 py-2 fw-semibold shadow-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#productoModal">
+
+                <i class="bi bi-plus-lg me-1"></i>
+                Nuevo Producto
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             TABLA DE PRODUCTOS
+             ========================= -->
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-header bg-white py-3 border-bottom
+                        d-flex justify-content-between align-items-center">
+
+                <h5 class="m-0 fw-bold fs-6 text-dark">
+
+                    <i class="bi bi-list-task me-2"></i>
+                    Productos Registrados
+
+                </h5>
+
+
+                <span class="badge bg-light text-dark border fw-normal"
+                      th:text="${#lists.size(productos)} + ' registros'">
+
+                    0 registros
+
+                </span>
+
+            </div>
+
+
+            <div class="card-body p-0">
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle mb-0">
+
+                        <thead class="table-light">
+
+                        <tr>
+
+                            <th class="ps-3">
+                                #
+                            </th>
+
+                            <th>
+                                Nombre
+                            </th>
+
+                            <th>
+                                Precio
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th class="text-end pe-4">
+                                Acciones
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        <!-- Productos -->
+                        <tr th:each="p, stat : ${productos}">
+
+                            <td class="ps-3 fw-semibold text-secondary"
+                                th:text="${stat.count}">
+                                1
+                            </td>
+
+
+                            <td class="fw-medium text-dark"
+                                th:text="${p.nombreProducto}">
+                                Casado
+                            </td>
+
+
+                            <td th:text="${p.precioVenta != null ? '₡' + p.precioVenta : '-'}">
+                                -
+                            </td>
+
+
+                            <!-- Estado -->
+                            <td>
+
+                                <span class="badge bg-success-subtle text-success"
+                                      th:if="${p.activo}">
+                                    Activo
+                                </span>
+
+                                <span class="badge bg-secondary-subtle text-secondary"
+                                      th:unless="${p.activo}">
+                                    Inactivo
+                                </span>
+
+                            </td>
+
+
+                            <!-- Acciones -->
+                            <td class="text-end pe-4">
+
+
+                                <!-- MODIFICAR -->
+                                <a th:href="@{/producto/modificar/{id}(id=${p.idProducto})}"
+                                   class="btn btn-action btn-light text-warning-emphasis me-1"
+                                   title="Modificar">
+
+                                    <i class="bi bi-pencil-fill"></i>
+
+                                </a>
+
+
+                                <!-- DEFINIR RECETA -->
+                                <a th:href="@{/receta/editar/{id}(id=${p.idProducto})}"
+                                   class="btn btn-action btn-light text-primary me-1"
+                                   title="Definir receta">
+
+                                    <i class="bi bi-journal-text"></i>
+
+                                </a>
+
+
+                                <!-- ELIMINAR -->
+                                <a th:href="@{/producto/eliminar/{id}(id=${p.idProducto})}"
+                                   class="btn btn-action btn-light text-danger"
+                                   title="Eliminar"
+                                   onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
+
+                                    <i class="bi bi-trash-fill"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        <!-- Sin productos -->
+                        <tr th:if="${#lists.isEmpty(productos)}">
+
+                            <td colspan="5"
+                                class="text-center py-4 text-muted">
+
+                                No hay productos registrados.
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- =========================
+     MODAL PRODUCTO
+     ========================= -->
+<div class="modal fade"
+     id="productoModal"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+
+            <!-- Modal Header -->
+            <div class="modal-header bg-primary text-white">
+
+                <h5 class="modal-title fw-bold">
+
+                    <i class="bi bi-egg-fried me-2"></i>
+
+                    <span th:text="${producto.idProducto != null}
+                          ? 'Modificar Producto'
+                          : 'Nuevo Producto'">
+
+                        Nuevo Producto
+
+                    </span>
+
+                </h5>
+
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+            <!-- Formulario -->
+            <form th:action="@{/producto/guardar}"
+                  th:object="${producto}"
+                  method="post">
+
+                <div class="modal-body p-4">
+
+
+                    <!-- ID -->
+                    <input type="hidden"
+                           th:field="*{idProducto}">
+
+
+                    <!-- Nombre -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Nombre del Producto
+                        </label>
+
+                        <input type="text"
+                               class="form-control"
+                               th:field="*{nombreProducto}"
+                               required
+                               placeholder="Ej: Casado">
+
+                    </div>
+
+
+                    <!-- Precio -->
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Precio de Venta (₡)
+                        </label>
+
+                        <input type="number"
+                               step="0.01"
+                               class="form-control"
+                               th:field="*{precioVenta}"
+                               required
+                               placeholder="0.00">
+
+                    </div>
+
+
+                    <!-- Estado -->
+                    <div class="form-check">
+
+                        <input type="checkbox"
+                               class="form-check-input"
+                               th:field="*{activo}">
+
+                        <label class="form-check-label">
+                            Activo
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Modal Footer -->
+                <div class="modal-footer bg-light px-4 py-3">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary"
+                            data-bs-dismiss="modal">
+
+                        Cerrar
+
+                    </button>
+
+
+                    <button type="submit"
+                            class="btn btn-primary px-4">
+
+                        <i class="bi bi-save me-1"></i>
+                        Guardar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- =========================
+     ABRIR MODAL AUTOMÁTICAMENTE
+     AL MODIFICAR
+     ========================= -->
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+
+    var esEdicion = /*[[${producto.idProducto != null}]]*/ false;
+
+    if (esEdicion) {
+
+        var modalElemento =
+            document.getElementById('productoModal');
+
+        var modal =
+            new bootstrap.Modal(modalElemento);
+
+        modal.show();
+    }
+
+    /*]]>*/
+
+</script>
+
+</body>
+</html>
+

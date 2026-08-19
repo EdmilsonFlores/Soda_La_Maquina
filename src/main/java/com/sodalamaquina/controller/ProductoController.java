@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 @RequestMapping("/producto")
-
 public class ProductoController {
+
     private final ProductoService productoService;
 
     public ProductoController(ProductoService productoService) {
@@ -23,7 +23,7 @@ public class ProductoController {
     public String listado(Model model) {
         model.addAttribute("productos", productoService.getProductos(false));
         model.addAttribute("producto", new Producto());
-        return "/producto/listado";
+        return "producto/listado";
     }
 
     @PostMapping("/guardar")
@@ -40,8 +40,13 @@ public class ProductoController {
 
     @GetMapping("/modificar/{idProducto}")
     public String modificar(@PathVariable Integer idProducto, Model model) {
-        model.addAttribute("producto", productoService.getProducto(idProducto));
-        model.addAttribute("productos", productoService.getProductos(false));
-        return "/producto/listado";
+
+        model.addAttribute("producto",
+                productoService.getProducto(idProducto));
+
+        model.addAttribute("productos",
+                productoService.getProductos(false));
+
+        return "producto/listado";
     }
 }

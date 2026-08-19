@@ -32,7 +32,6 @@ public class VentaController {
         this.usuarioService = usuarioService;
     }
 
-    // HU-16: cuadrícula de platos + carrito actual + lista de cajeros para cobrar
     @GetMapping("/pos")
     public String pos(HttpSession session, Model model) {
         List<CarritoItem> carrito = getCarrito(session);
@@ -43,7 +42,7 @@ public class VentaController {
         return "/venta/pos";
     }
 
-    // HU-17 paso 1: agregar un plato al carrito
+    
     @PostMapping("/agregar")
     public String agregar(@RequestParam Integer idProducto,
             @RequestParam(defaultValue = "1") Integer cantidad,
@@ -66,7 +65,7 @@ public class VentaController {
         return "redirect:/venta/pos";
     }
 
-    // HU-17 paso 2: botón "Cobrar" -> guarda la venta y dispara HU-20
+    
     @PostMapping("/cobrar")
     public String cobrar(@RequestParam Long idUsuario, HttpSession session) {
         List<CarritoItem> carrito = getCarrito(session);
