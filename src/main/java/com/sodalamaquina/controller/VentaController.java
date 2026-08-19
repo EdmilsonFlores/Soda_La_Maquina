@@ -1,4 +1,5 @@
 package com.sodalamaquina.controller;
+
 import com.sodalamaquina.domain.Producto;
 import com.sodalamaquina.domain.Usuario;
 import com.sodalamaquina.domain.Venta;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/venta")
 public class VentaController {
+
     private static final String CARRITO_SESSION = "carritoVenta";
 
     private final VentaService ventaService;
@@ -30,17 +32,18 @@ public class VentaController {
         this.usuarioService = usuarioService;
     }
 
-   
+    // HU-16: cuadrícula de platos + carrito actual + lista de cajeros para cobrar
     @GetMapping("/pos")
     public String pos(HttpSession session, Model model) {
         List<CarritoItem> carrito = getCarrito(session);
         model.addAttribute("productos", productoService.getProductos(true));
+        model.addAttribute("usuarios", usuarioService.getUsuarios());
         model.addAttribute("carrito", carrito);
         model.addAttribute("total", calcularTotal(carrito));
         return "/venta/pos";
     }
 
-   
+    // HU-17 paso 1: agregar un plato al carrito
     @PostMapping("/agregar")
     public String agregar(@RequestParam Integer idProducto,
             @RequestParam(defaultValue = "1") Integer cantidad,
@@ -63,7 +66,7 @@ public class VentaController {
         return "redirect:/venta/pos";
     }
 
-    
+    // HU-17 paso 2: botón "Cobrar" -> guarda la venta y dispara HU-20
     @PostMapping("/cobrar")
     public String cobrar(@RequestParam Long idUsuario, HttpSession session) {
         List<CarritoItem> carrito = getCarrito(session);
