@@ -11,7 +11,9 @@ com\sodalamaquina\controller\HomeController.class
 com\sodalamaquina\repository\RolRepository.class
 com\sodalamaquina\controller\InsumoProveedorController.class
 com\sodalamaquina\domain\Producto.class
+com\sodalamaquina\config\AuthInterceptor.class
 com\sodalamaquina\repository\ProveedorRepository.class
+com\sodalamaquina\config\WebConfig.class
 com\sodalamaquina\service\CategoriaInsumoService.class
 com\sodalamaquina\domain\Usuario.class
 com\sodalamaquina\controller\RecetaController.class
@@ -19,6 +21,7 @@ com\sodalamaquina\service\RecetaService.class
 com\sodalamaquina\repository\CategoriaInsumoRepository.class
 com\sodalamaquina\service\VentaService.class
 com\sodalamaquina\service\InsumoProveedorService.class
+com\sodalamaquina\controller\LoginController.class
 com\sodalamaquina\domain\InsumoProveedor.class
 com\sodalamaquina\service\UsuarioService.class
 com\sodalamaquina\service\ProveedorService.class

@@ -1,14 +1,14 @@
 package com.sodalamaquina.service;
-
 import com.sodalamaquina.domain.Usuario;
 import com.sodalamaquina.repository.UsuarioRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class UsuarioService {
-
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -29,5 +29,10 @@ public class UsuarioService {
 
     public void delete(Usuario usuario) {
         usuarioRepository.delete(usuario);
+    }
+
+    @Transactional(readOnly = true)
+    public Usuario buscarPorUsername(String username) {
+        return usuarioRepository.findByUsername(username);
     }
 }
