@@ -62,45 +62,90 @@
 
         <div class="d-flex">
 
-            <!-- Sidebar Lateral -->
+            <!-- =========================
+                 SIDEBAR LATERAL
+                 ========================= -->
             <aside class="sidebar p-3 d-flex flex-column justify-content-between flex-shrink-0">
                 <div>
+                    <!-- Branding -->
                     <div class="mb-4 px-2 pt-2">
                         <h3 class="brand-title mb-0 text-white">LA MÁQUINA</h3>
                         <span class="brand-subtitle text-uppercase">Panel de Gestión Interna</span>
                     </div>
 
+                    <!-- Menú de navegación -->
                     <ul class="nav nav-pills flex-column mb-auto">
+                        <!-- Dashboard -->
                         <li class="nav-item">
                             <a th:href="@{/}" class="nav-link">
                                 <i class="bi bi-grid-1x2-fill me-2"></i> Dashboard
                             </a>
                         </li>
+
+                        <!-- Insumos (ACTIVO) -->
                         <li>
                             <a th:href="@{/insumo/listado}" class="nav-link active">
                                 <i class="bi bi-box-seam me-2"></i> Gestión de Insumos
                             </a>
                         </li>
+
+                        <!-- Categorías -->
                         <li>
                             <a th:href="@{/categoria/listado}" class="nav-link">
                                 <i class="bi bi-tag me-2"></i> Categorías
                             </a>
                         </li>
+
+                        <!-- Proveedores -->
                         <li>
                             <a th:href="@{/proveedor/listado}" class="nav-link">
                                 <i class="bi bi-truck me-2"></i> Proveedores
                             </a>
                         </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a th:href="@{/producto/listado}" class="nav-link">
+                                <i class="bi bi-egg-fried me-2"></i> Productos
+                            </a>
+                        </li>
+
+                        <!-- Recetas -->
+                        <li>
+                            <a th:href="@{/receta/listado}" class="nav-link">
+                                <i class="bi bi-journal-text me-2"></i> Recetas
+                            </a>
+                        </li>
+
+                        <!-- Punto de Venta -->
+                        <li>
+                            <a th:href="@{/venta/pos}" class="nav-link">
+                                <i class="bi bi-cash-coin me-2"></i> Punto de Venta
+                            </a>
+                        </li>
+
+                        <!-- Reportes -->
+                        <li>
+                            <a th:href="@{/reporte/ventas}" class="nav-link">
+                                <i class="bi bi-bar-chart-line me-2"></i> Reportes
+                            </a>
+                        </li>
+
+                        <!-- Usuarios -->
                         <li>
                             <a th:href="@{/usuario/listado}" class="nav-link">
                                 <i class="bi bi-people me-2"></i> Usuarios
                             </a>
                         </li>
+
+                        <!-- Roles -->
                         <li>
                             <a th:href="@{/rol/listado}" class="nav-link">
                                 <i class="bi bi-person-badge me-2"></i> Roles
                             </a>
                         </li>
+
+                        <!-- Insumo Proveedor -->
                         <li>
                             <a th:href="@{/insumo-proveedor/listado}" class="nav-link">
                                 <i class="bi bi-arrow-left-right me-2"></i> Insumo Proveedor
@@ -109,6 +154,7 @@
                     </ul>
                 </div>
 
+                <!-- Cerrar Sesión -->
                 <div class="pt-3 border-top border-secondary">
                     <a th:href="@{/logout}" class="nav-link text-danger">
                         <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
@@ -116,7 +162,9 @@
                 </div>
             </aside>
 
-            <!-- Contenido Principal -->
+            <!-- =========================
+                 CONTENIDO PRINCIPAL
+                 ========================= -->
             <main class="flex-grow-1 p-4 overflow-auto" style="height: 100vh;">
 
                 <!-- Header Superior con Botón de Nuevo Insumo -->
@@ -152,12 +200,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Cambiamos 'i' por 'i, stat' para habilitar el contador dinámico -->
                                     <tr th:each="i, stat : ${insumos}">
 
-                                        <!-- 1. Mostrar la numeración visual consecutiva (1, 2, 3, 4...) -->
                                         <td class="ps-3 fw-semibold text-secondary" th:text="${stat.count}">1</td>
-
                                         <td class="fw-medium text-dark" th:text="${i.nombre}">Insumo</td>
                                         <td>
                                             <span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill px-3" 
@@ -177,7 +222,6 @@
                                                   th:text="${i.alertaMinima != null ? i.alertaMinima : '-'}">-</span>
                                         </td>
 
-                                        <!-- 2. Mantener la ID real (i.idInsumo) internamente para los enlaces de backend -->
                                         <td class="text-end pe-4">
                                             <a th:href="@{/insumo/modificar/{id}(id=${i.idInsumo})}" 
                                                class="btn btn-action btn-light text-warning-emphasis me-1" 
@@ -289,13 +333,13 @@
 
         <!-- Script para abrir el modal automáticamente cuando se presiona "Modificar" -->
         <script th:inline="javascript">
-               /*<![CDATA[*/
-               var esEdicion = /*[[${insumo.idInsumo != null}]]*/ false;
-               if (esEdicion) {
-                   var insumoModal = new bootstrap.Modal(document.getElementById('insumoModal'));
-                   insumoModal.show();
-               }
-               /*]]>*/
+            /*<![CDATA[*/
+            var esEdicion = /*[[${insumo.idInsumo != null}]]*/ false;
+            if (esEdicion) {
+                var insumoModal = new bootstrap.Modal(document.getElementById('insumoModal'));
+                insumoModal.show();
+            }
+            /*]]>*/
         </script>
     </body>
 </html>

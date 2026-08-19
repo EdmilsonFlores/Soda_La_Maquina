@@ -1,348 +1,352 @@
-```html
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Dashboard - SodaLaMaquina</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>Dashboard - SodaLaMaquina</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
 
-        .sidebar {
-            width: 260px;
-            min-height: 100vh;
-            background-color: #111111;
-            color: #ffffff;
-        }
+            .sidebar {
+                width: 260px;
+                min-height: 100vh;
+                background-color: #111111;
+                color: #ffffff;
+            }
 
-        .sidebar .nav-link {
-            color: #b0b0b0;
-            padding: 0.75rem 1.25rem;
-            font-weight: 500;
-            border-radius: 0.375rem;
-            margin-bottom: 0.2rem;
-        }
+            .sidebar .nav-link {
+                color: #b0b0b0;
+                padding: 0.75rem 1.25rem;
+                font-weight: 500;
+                border-radius: 0.375rem;
+                margin-bottom: 0.2rem;
+            }
 
-        .sidebar .nav-link:hover {
-            color: #ffffff;
-            background-color: #222222;
-        }
+            .sidebar .nav-link:hover {
+                color: #ffffff;
+                background-color: #222222;
+            }
 
-        .sidebar .nav-link.active {
-            color: #ffffff;
-            background-color: #2a2a2a;
-        }
+            .sidebar .nav-link.active {
+                color: #ffffff;
+                background-color: #2a2a2a;
+            }
 
-        .brand-title {
-            font-weight: 800;
-            letter-spacing: 1px;
-        }
+            .brand-title {
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
 
-        .brand-subtitle {
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
-            color: #888888;
-        }
+            .brand-subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 1.5px;
+                color: #888888;
+            }
 
-        .metric-card {
-            border: none;
-            border-radius: 12px;
-            transition: transform 0.2s;
-        }
+            .metric-card {
+                border: none;
+                border-radius: 12px;
+                transition: transform 0.2s;
+            }
 
-        .metric-card:hover {
-            transform: translateY(-2px);
-        }
-    </style>
-</head>
+            .metric-card:hover {
+                transform: translateY(-2px);
+            }
+        </style>
+    </head>
 
-<body>
+    <body>
 
-<div class="d-flex">
+        <div class="d-flex">
 
-    <!-- =========================
-         SIDEBAR LATERAL
-         ========================= -->
-    <aside class="sidebar p-3 d-flex flex-column justify-content-between flex-shrink-0">
+            <!-- =========================
+                 SIDEBAR LATERAL
+                 ========================= -->
+            <aside class="sidebar p-3 d-flex flex-column justify-content-between flex-shrink-0">
 
-        <div>
+                <div>
 
-            <!-- Branding -->
-            <div class="mb-4 px-2 pt-2">
-                <h3 class="brand-title mb-0 text-white">
-                    LA MÁQUINA
-                </h3>
+                    <!-- Branding -->
+                    <div class="mb-4 px-2 pt-2">
+                        <h3 class="brand-title mb-0 text-white">
+                            LA MÁQUINA
+                        </h3>
 
-                <span class="brand-subtitle text-uppercase">
-                    Panel de Gestión Interna
-                </span>
-            </div>
+                        <span class="brand-subtitle text-uppercase">
+                            Panel de Gestión Interna
+                        </span>
+                    </div>
 
-            <!-- Menú de navegación -->
-            <ul class="nav nav-pills flex-column mb-auto">
+                    <!-- Menú de navegación -->
+                    <ul class="nav nav-pills flex-column mb-auto">
 
-                <!-- Dashboard -->
-                <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link active">
-                        <i class="bi bi-grid-1x2-fill me-2"></i>
-                        Dashboard
+                        <!-- Dashboard -->
+                        <li class="nav-item">
+                            <a th:href="@{/}" class="nav-link active">
+                                <i class="bi bi-grid-1x2-fill me-2"></i>
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <!-- Insumos -->
+                        <li>
+                            <a th:href="@{/insumo/listado}" class="nav-link">
+                                <i class="bi bi-box-seam me-2"></i>
+                                Gestión de Insumos
+                            </a>
+                        </li>
+
+                        <!-- Categorías -->
+                        <li>
+                            <a th:href="@{/categoria/listado}" class="nav-link">
+                                <i class="bi bi-tag me-2"></i>
+                                Categorías
+                            </a>
+                        </li>
+
+                        <!-- Proveedores -->
+                        <li>
+                            <a th:href="@{/proveedor/listado}" class="nav-link">
+                                <i class="bi bi-truck me-2"></i>
+                                Proveedores
+                            </a>
+                        </li>
+
+                        <!-- Productos -->
+                        <li>
+                            <a th:href="@{/producto/listado}" class="nav-link">
+                                <i class="bi bi-egg-fried me-2"></i>
+                                Productos
+                            </a>
+                        </li>
+
+                        <!-- Recetas -->
+                        <li>
+                            <a th:href="@{/receta/listado}" class="nav-link">
+                                <i class="bi bi-journal-text me-2"></i>
+                                Recetas
+                            </a>
+                        </li>
+
+                        <!-- Punto de Venta -->
+                        <li>
+                            <a th:href="@{/venta/pos}" class="nav-link">
+                                <i class="bi bi-cash-coin me-2"></i>
+                                Punto de Venta
+                            </a>
+                        </li>
+
+                        <!-- Reportes -->
+                        <li>
+                            <a th:href="@{/reporte/ventas}" class="nav-link">
+                                <i class="bi bi-bar-chart-line me-2"></i>
+                                Reportes
+                            </a>
+                        </li>
+
+                        <!-- Usuarios -->
+                        <li>
+                            <a th:href="@{/usuario/listado}" class="nav-link">
+                                <i class="bi bi-people me-2"></i>
+                                Usuarios
+                            </a>
+                        </li>
+
+                        <!-- Roles -->
+                        <li>
+                            <a th:href="@{/rol/listado}" class="nav-link">
+                                <i class="bi bi-person-badge me-2"></i>
+                                Roles
+                            </a>
+                        </li>
+
+                        <!-- Insumo Proveedor -->
+                        <li>
+                            <a th:href="@{/insumo-proveedor/listado}" class="nav-link">
+                                <i class="bi bi-arrow-left-right me-2"></i>
+                                Insumo Proveedor
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Cerrar sesión -->
+                <div class="pt-3 border-top border-secondary">
+                    <a th:href="@{/logout}" class="nav-link text-danger">
+                        <i class="bi bi-box-arrow-left me-2"></i>
+                        Cerrar Sesión
                     </a>
-                </li>
+                </div>
 
-                <!-- Insumos -->
-                <li>
-                    <a th:href="@{/insumo/listado}" class="nav-link">
-                        <i class="bi bi-box-seam me-2"></i>
-                        Gestión de Insumos
-                    </a>
-                </li>
-
-                <!-- Categorías -->
-                <li>
-                    <a th:href="@{/categoria/listado}" class="nav-link">
-                        <i class="bi bi-tag me-2"></i>
-                        Categorías
-                    </a>
-                </li>
-
-                <!-- Proveedores -->
-                <li>
-                    <a th:href="@{/proveedor/listado}" class="nav-link">
-                        <i class="bi bi-truck me-2"></i>
-                        Proveedores
-                    </a>
-                </li>
-
-                <!-- Productos -->
-                <li>
-                    <a th:href="@{/producto/listado}" class="nav-link">
-                        <i class="bi bi-egg-fried me-2"></i>
-                        Productos
-                    </a>
-                </li>
-
-                <!-- Recetas -->
-                <li>
-                    <a th:href="@{/receta/listado}" class="nav-link">
-                        <i class="bi bi-journal-text me-2"></i>
-                        Recetas
-                    </a>
-                </li>
-
-                <!-- Punto de Venta -->
-                <li>
-                    <a th:href="@{/venta/pos}" class="nav-link">
-                        <i class="bi bi-cash-coin me-2"></i>
-                        Punto de Venta
-                    </a>
-                </li>
-
-                <!-- Reportes -->
-                <li>
-                    <a th:href="@{/reporte/ventas}" class="nav-link">
-                        <i class="bi bi-bar-chart-line me-2"></i>
-                        Reportes
-                    </a>
-                </li>
-
-                <!-- Usuarios -->
-                <li>
-                    <a th:href="@{/usuario/listado}" class="nav-link">
-                        <i class="bi bi-people me-2"></i>
-                        Usuarios
-                    </a>
-                </li>
-
-                <!-- Roles -->
-                <li>
-                    <a th:href="@{/rol/listado}" class="nav-link">
-                        <i class="bi bi-person-badge me-2"></i>
-                        Roles
-                    </a>
-                </li>
-
-                <!-- Insumo Proveedor -->
-                <li>
-                    <a th:href="@{/insumo-proveedor/listado}" class="nav-link">
-                        <i class="bi bi-arrow-left-right me-2"></i>
-                        Insumo Proveedor
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
-        <!-- Cerrar sesión -->
-        <div class="pt-3 border-top border-secondary">
-            <a th:href="@{/logout}" class="nav-link text-danger">
-                <i class="bi bi-box-arrow-left me-2"></i>
-                Cerrar Sesión
-            </a>
-        </div>
-
-    </aside>
+            </aside>
 
 
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-         ========================= -->
-    <main class="flex-grow-1 p-4 overflow-auto" style="height: 100vh;">
+            <!-- =========================
+                 CONTENIDO PRINCIPAL
+                 ========================= -->
+            <main class="flex-grow-1 p-4 overflow-auto" style="height: 100vh;">
 
-        <!-- Header Superior -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+                <!-- Header Superior -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
 
-            <div>
-                <h2 class="fw-bold mb-0">
-                    Dashboard
-                </h2>
+                    <div>
+                        <h2 class="fw-bold mb-0">
+                            Dashboard
+                        </h2>
 
-                <p class="text-muted small mb-0">
-                    Resumen general y métricas del sistema
-                </p>
-            </div>
+                        <p class="text-muted small mb-0">
+                            Resumen general y métricas del sistema
+                        </p>
+                    </div>
 
-            <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-3">
 
-                <span class="text-muted fw-medium">
-                    Admin
-                </span>
+                        <span class="text-muted fw-medium">
+                            Admin
+                        </span>
 
-                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
-                     style="width: 40px; height: 40px;">
+                        <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                             style="width: 40px; height: 40px;">
 
-                    <i class="bi bi-person-fill"></i>
+                            <i class="bi bi-person-fill"></i>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
 
-        </div>
+                <!-- =========================
+                     TARJETAS DE MÉTRICAS
+                     ========================= -->
+                <div class="row g-4 mb-4">
+
+                    <!-- Total Insumos -->
+                    <div class="col-md-3">
+                        <div class="card metric-card shadow-sm p-3 bg-white">
+
+                            <p class="text-muted mb-1 fw-semibold">
+                                Total Insumos
+                            </p>
+
+                            <h2 class="fw-bold m-0"
+                                th:text="${totalInsumos}">
+                                0
+                            </h2>
+
+                        </div>
+                    </div>
 
 
-        <!-- =========================
-             TARJETAS DE MÉTRICAS
-             ========================= -->
-        <div class="row g-4 mb-4">
+                    <!-- Categorías -->
+                    <div class="col-md-3">
+                        <div class="card metric-card shadow-sm p-3 bg-white">
 
-            <!-- Total Insumos -->
-            <div class="col-md-3">
-                <div class="card metric-card shadow-sm p-3 bg-white">
+                            <p class="text-muted mb-1 fw-semibold">
+                                Categorías
+                            </p>
 
-                    <p class="text-muted mb-1 fw-semibold">
-                        Total Insumos
-                    </p>
+                            <h2 class="fw-bold m-0"
+                                th:text="${totalCategorias}">
+                                0
+                            </h2>
 
-                    <h2 class="fw-bold m-0"
-                        th:text="${totalInsumos}">
-                        0
-                    </h2>
+                        </div>
+                    </div>
+
+
+                    <!-- Proveedores -->
+                    <div class="col-md-3">
+                        <div class="card metric-card shadow-sm p-3 bg-white">
+
+                            <p class="text-muted mb-1 fw-semibold">
+                                Proveedores
+                            </p>
+
+                            <h2 class="fw-bold m-0"
+                                th:text="${totalProveedores}">
+                                0
+                            </h2>
+
+                        </div>
+                    </div>
+
+
+                    <!-- Stock Bajo -->
+                    <div class="col-md-3">
+                        <div class="card metric-card shadow-sm p-3 bg-white border-start border-danger border-4">
+
+                            <p class="text-danger mb-1 fw-semibold">
+                                Stock Bajo
+                            </p>
+
+                            <h2 class="fw-bold text-danger m-0"
+                                th:text="${totalStockBajo}">
+                                0
+                            </h2>
+
+                        </div>
+                    </div>
 
                 </div>
-            </div>
 
 
-            <!-- Categorías -->
-            <div class="col-md-3">
-                <div class="card metric-card shadow-sm p-3 bg-white">
+                <!-- =========================
+                     ALERTAS DE STOCK BAJO
+                     ========================= -->
+                <div class="row">
 
-                    <p class="text-muted mb-1 fw-semibold">
-                        Categorías
-                    </p>
+                    <div class="col-12">
 
-                    <h2 class="fw-bold m-0"
-                        th:text="${totalCategorias}">
-                        0
-                    </h2>
+                        <div class="card shadow-sm border-0 rounded-4">
 
-                </div>
-            </div>
+                            <div class="card-body p-4">
 
-
-            <!-- Proveedores -->
-            <div class="col-md-3">
-                <div class="card metric-card shadow-sm p-3 bg-white">
-
-                    <p class="text-muted mb-1 fw-semibold">
-                        Proveedores
-                    </p>
-
-                    <h2 class="fw-bold m-0"
-                        th:text="${totalProveedores}">
-                        0
-                    </h2>
-
-                </div>
-            </div>
+                                <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                                    ⚠️ Alertas de Stock Bajo
+                                </h5>
 
 
-            <!-- Stock Bajo -->
-            <div class="col-md-3">
-                <div class="card metric-card shadow-sm p-3 bg-white border-start border-danger border-4">
+                                <div class="d-flex flex-column gap-3">
 
-                    <p class="text-danger mb-1 fw-semibold">
-                        Stock Bajo
-                    </p>
+                                    <!-- Insumos con stock bajo -->
+                                    <div th:each="insumo : ${insumosStockBajo}"
+                                         class="p-3 bg-danger bg-opacity-10 text-danger-emphasis rounded-3 d-flex justify-content-between align-items-center">
 
-                    <h2 class="fw-bold text-danger m-0"
-                        th:text="${totalStockBajo}">
-                        0
-                    </h2>
+                                        <span class="fw-medium"
+                                              th:text="${insumo.nombre}">
+                                            Nombre Insumo
+                                        </span>
 
-                </div>
-            </div>
+                                        <span class="badge bg-danger"
+                                              th:text="${insumo.cantidadActual + ' ' + (insumo.unidadMedida != null ? insumo.unidadMedida : '') + ' restantes'}">
+                                            0 restantes
+                                        </span>
 
-        </div>
-
-
-        <!-- =========================
-             ALERTAS DE STOCK BAJO
-             ========================= -->
-        <div class="row">
-
-            <div class="col-12">
-
-                <div class="card shadow-sm border-0 rounded-4">
-
-                    <div class="card-body p-4">
-
-                        <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
-                            ⚠️ Alertas de Stock Bajo
-                        </h5>
+                                    </div>
 
 
-                        <div class="d-flex flex-column gap-3">
+                                    <!-- Sin stock bajo -->
+                                    <div th:if="${#lists.isEmpty(insumosStockBajo)}"
+                                         class="text-muted p-2">
 
-                            <!-- Insumos con stock bajo -->
-                            <div th:each="insumo : ${insumosStockBajo}"
-                                 class="p-3 bg-danger bg-opacity-10 text-danger-emphasis rounded-3 d-flex justify-content-between align-items-center">
+                                        No hay insumos con stock crítico en este momento.
 
-                                <span class="fw-medium"
-                                      th:text="${insumo.nombre}">
-                                    Nombre Insumo
-                                </span>
+                                    </div>
 
-                                <span class="badge bg-danger"
-                                      th:text="${insumo.cantidadActual + ' ' + (insumo.unidadMedida != null ? insumo.unidadMedida : '') + ' restantes'}">
-                                    0 restantes
-                                </span>
-
-                            </div>
-
-
-                            <!-- Sin stock bajo -->
-                            <div th:if="${#lists.isEmpty(insumosStockBajo)}"
-                                 class="text-muted p-2">
-
-                                No hay insumos con stock crítico en este momento.
+                                </div>
 
                             </div>
 
@@ -352,17 +356,13 @@
 
                 </div>
 
-            </div>
+            </main>
 
         </div>
 
-    </main>
 
-</div>
+        <!-- Bootstrap 5 JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-<!-- Bootstrap 5 JS Bundle -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
+    </body>
 </html>
