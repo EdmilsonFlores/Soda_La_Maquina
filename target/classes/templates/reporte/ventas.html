@@ -1,42 +1,235 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Reporte de Ventas - La Máquina</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container mt-4" style="max-width: 600px;">
-    <h3 class="fw-bold mb-4">Reporte de Ventas e Ingresos</h3>
 
-    <form th:action="@{/reporte/ventas}" method="get" class="row g-2 mb-4">
-        <div class="col-5">
-            <label class="form-label small">Desde</label>
-            <input type="date" name="inicio" class="form-control" th:value="${inicio}" required>
-        </div>
-        <div class="col-5">
-            <label class="form-label small">Hasta</label>
-            <input type="date" name="fin" class="form-control" th:value="${fin}" required>
-        </div>
-        <div class="col-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Ver</button>
-        </div>
-    </form>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reporte de Ventas - La Máquina</title>
 
-    <div class="row g-3" th:if="${total != null}">
-        <div class="col-6">
-            <div class="card border-0 shadow-sm p-3">
-                <p class="text-muted mb-1 small">Total Facturado</p>
-                <h3 class="fw-bold" th:text="'₡' + ${total}">₡0</h3>
-            </div>
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+
+            .sidebar {
+                width: 260px;
+                min-height: 100vh;
+                background-color: #111111;
+                color: #ffffff;
+            }
+
+            .sidebar .nav-link {
+                color: #b0b0b0;
+                padding: 0.75rem 1.25rem;
+                font-weight: 500;
+                border-radius: 0.375rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .sidebar .nav-link:hover {
+                color: #ffffff;
+                background-color: #222222;
+            }
+
+            .sidebar .nav-link.active {
+                color: #ffffff;
+                background-color: #2a2a2a;
+            }
+
+            .brand-title {
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
+
+            .brand-subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 1.5px;
+                color: #888888;
+            }
+
+            .kpi-icon {
+                width: 48px;
+                height: 48px;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.4rem;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="d-flex">
+
+            <!-- =========================
+                 SIDEBAR LATERAL
+                 ========================= -->
+            <aside class="sidebar p-3 d-flex flex-column justify-content-between flex-shrink-0">
+                <div>
+                    <!-- Branding -->
+                    <div class="mb-4 px-2 pt-2">
+                        <h3 class="brand-title mb-0 text-white">LA MÁQUINA</h3>
+                        <span class="brand-subtitle text-uppercase">Panel de Gestión Interna</span>
+                    </div>
+
+                    <!-- Menú de navegación completo -->
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a th:href="@{/}" class="nav-link">
+                                <i class="bi bi-grid-1x2-fill me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/insumo/listado}" class="nav-link">
+                                <i class="bi bi-box-seam me-2"></i> Gestión de Insumos
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/categoria/listado}" class="nav-link">
+                                <i class="bi bi-tag me-2"></i> Categorías
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/proveedor/listado}" class="nav-link">
+                                <i class="bi bi-truck me-2"></i> Proveedores
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/producto/listado}" class="nav-link">
+                                <i class="bi bi-egg-fried me-2"></i> Productos
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/receta/listado}" class="nav-link">
+                                <i class="bi bi-journal-text me-2"></i> Recetas
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/venta/pos}" class="nav-link">
+                                <i class="bi bi-cash-coin me-2"></i> Punto de Venta
+                            </a>
+                        </li>
+                        <!-- Opción Activa -->
+                        <li>
+                            <a th:href="@{/reporte/ventas}" class="nav-link active">
+                                <i class="bi bi-bar-chart-line me-2"></i> Reportes
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/usuario/listado}" class="nav-link">
+                                <i class="bi bi-people me-2"></i> Usuarios
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/rol/listado}" class="nav-link">
+                                <i class="bi bi-person-badge me-2"></i> Roles
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/insumo-proveedor/listado}" class="nav-link">
+                                <i class="bi bi-arrow-left-right me-2"></i> Insumo Proveedor
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Botón para Cerrar Sesión -->
+                <div class="pt-3 border-top border-secondary">
+                    <a th:href="@{/logout}" class="nav-link text-danger">
+                        <i class="bi bi-box-arrow-left me-2"></i> Cerrar Sesión
+                    </a>
+                </div>
+            </aside>
+
+            <!-- =========================
+                 CONTENIDO PRINCIPAL
+                 ========================= -->
+            <main class="flex-grow-1 p-4 overflow-auto" style="height: 100vh;">
+
+                <!-- Header de la sección -->
+                <div class="mb-4">
+                    <h2 class="fw-bold mb-0">Reporte de Ventas e Ingresos</h2>
+                    <p class="text-muted small mb-0">Consulta el rendimiento financiero y volumen de órdenes por rango de fechas</p>
+                </div>
+
+                <!-- Filtro por Fechas -->
+                <div class="card border-0 shadow-sm p-4 mb-4" style="max-width: 700px;">
+                    <h5 class="fw-bold fs-6 mb-3 text-dark">
+                        <i class="bi bi-calendar-range me-2 text-primary"></i>Filtrar Período
+                    </h5>
+
+                    <form th:action="@{/reporte/ventas}" method="get" class="row g-3 align-items-end">
+                        <div class="col-md-5">
+                            <label class="form-label small fw-semibold text-secondary">Fecha Inicial</label>
+                            <input type="date" name="inicio" class="form-control" th:value="${inicio}" required>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label small fw-semibold text-secondary">Fecha Final</label>
+                            <input type="date" name="fin" class="form-control" th:value="${fin}" required>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100 fw-semibold">
+                                <i class="bi bi-search me-1"></i> Ver
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tarjetas de Resultados (Métricas / KPIs) -->
+                <div class="row g-3" style="max-width: 700px;" th:if="${total != null}">
+
+                    <!-- Total Facturado -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="kpi-icon bg-success-subtle text-success me-3">
+                                    <i class="bi bi-cash-stack"></i>
+                                </div>
+                                <div>
+                                    <p class="text-muted mb-0 small fw-semibold text-uppercase">Total Facturado</p>
+                                    <h3 class="fw-bold text-dark mb-0" th:text="${total != null ? '₡' + total : '₡0'}">₡0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cantidad de Transacciones -->
+                    <div class="col-md-6">
+                        <div class="card border-0 shadow-sm p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="kpi-icon bg-primary-subtle text-primary me-3">
+                                    <i class="bi bi-receipt-cutoff"></i>
+                                </div>
+                                <div>
+                                    <p class="text-muted mb-0 small fw-semibold text-uppercase">Transacciones</p>
+                                    <h3 class="fw-bold text-dark mb-0" th:text="${transacciones != null ? transacciones : '0'}">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Estado Inicial (Antes de filtrar o sin resultados) -->
+                <div class="card border-0 shadow-sm p-5 text-center text-muted" style="max-width: 700px;" th:if="${total == null}">
+                    <i class="bi bi-bar-chart-fill fs-1 text-secondary opacity-50 mb-2"></i>
+                    <h6 class="fw-semibold text-dark mb-1">Sin datos para mostrar</h6>
+                    <p class="small text-muted mb-0">Selecciona un rango de fechas en el formulario superior para generar el resumen.</p>
+                </div>
+
+            </main>
+
         </div>
-        <div class="col-6">
-            <div class="card border-0 shadow-sm p-3">
-                <p class="text-muted mb-1 small">Transacciones</p>
-                <h3 class="fw-bold" th:text="${transacciones}">0</h3>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
+
+        <!-- Bootstrap 5 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    </body>
 </html>
